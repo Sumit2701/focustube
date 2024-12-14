@@ -11,11 +11,14 @@
       padding: 10px;
       box-sizing: border-box;
     }
+    .title{
+        color: red;
+    }
     h4 {
       margin: 0 0 10px 0;
       font-size: 14px;
     }
-    input {
+    input, select {
       width: 100%;
       padding: 5px;
       margin-bottom: 10px;
@@ -32,11 +35,30 @@
     button:hover {
       background-color: #005bb5;
     }
+
   </style>
 </head>
 <body>
-  <h4>Enter Topics (comma-separated):</h4>
+ <h4 class="title">Youtube Focus Filter</h4>
+  <h4>Select Language (Optional):</h4>
+  <select id="languageSelect">
+    <option value="">Any Language</option>
+    <option value="Japanese">Japanese</option>
+    <option value="Chinese">Chinese</option>
+    <option value="Korean">Korean</option>
+    <option value="Hindi">Hindi</option>
+    <option value="Russian">Russian</option>
+    <option value="Arabic">Arabic</option>
+    <option value="Greek">Greek</option>
+    <option value="Tamil">Tamil</option>
+    <option value="Thai">Thai</option>
+    <option value="Georgian">Georgian</option>
+    <option value="English">English</option>
+  </select>
+
+  <h4>Enter Topics (comma-separated) (Optional):</h4>
   <input type="text" id="topicsInput" placeholder="e.g., JavaScript, Travel, Cooking" />
+  
   <button id="applyButton">Apply</button>
 
   <!-- Reference the external script file -->
