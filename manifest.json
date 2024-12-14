@@ -1,0 +1,17 @@
+{
+    "manifest_version": 3,
+    "name": "YouTube Video Filter",
+    "version": "1.0",
+    "description": "Hides all YouTube videos that are not related to a specific topic.",
+    "permissions": ["scripting", "activeTab", "storage"],
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "content_scripts": [
+      {
+        "matches": ["*://www.youtube.com/*"],
+        "js": ["content.js"]
+      }
+    ]
+  }
+  

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Video Filter</title>
+  <style>
+    body {
+      width: 220px;
+      font-family: Arial, sans-serif;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    h4 {
+      margin: 0 0 10px 0;
+      font-size: 14px;
+    }
+    input {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 5px;
+      background-color: #0073ea;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005bb5;
+    }
+  </style>
+</head>
+<body>
+  <h4>Enter Topic:</h4>
+  <input type="text" id="topicInput" placeholder="e.g., JavaScript tutorials" />
+  <button id="applyButton">Apply</button>
+
+  <!-- Reference the external script file -->
+  <script src="popup.js"></script>
+</body>
+</html>
