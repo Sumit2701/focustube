@@ -1,15 +1,15 @@
-let filterTopic = "";
+let filterTopics = [];
 
-// Retrieve the user-defined topic from chrome.storage
-chrome.storage.local.get("filterTopic", (data) => {
-  console.log("Stored topic retrieved from storage:", data); // Log the entire storage data
-  if (data.filterTopic) {
-    filterTopic = data.filterTopic.toLowerCase();
-    console.log("Filter topic to hide unrelated videos:", filterTopic); // Confirm topic
+// Retrieve the user-defined topics from chrome.storage
+chrome.storage.local.get("filterTopics", (data) => {
+  console.log("Stored topics retrieved from storage:", data);
+  if (data.filterTopics && Array.isArray(data.filterTopics)) {
+    filterTopics = data.filterTopics;
+    console.log("Filter topics to hide unrelated videos:", filterTopics);
     hideUnrelatedVideos();
     observeDynamicChanges(); // Start observing dynamic changes
   } else {
-    console.log("No filter topic found in storage.");
+    console.log("No filter topics found in storage.");
   }
 });
 
@@ -17,26 +17,28 @@ chrome.storage.local.get("filterTopic", (data) => {
 function hideUnrelatedVideos() {
   console.log("Running hideUnrelatedVideos...");
 
-  // Select all video titles
-  const videoTitles = document.querySelectorAll("#video-title");
-  console.log("Total video titles found:", videoTitles.length);
+  const videoContainers = document.querySelectorAll("ytd-rich-item-renderer, style-scope");
+  console.log("Total video containers found:", videoContainers.length);
 
-  videoTitles.forEach((titleElement) => {
-    const titleText = titleElement.textContent || titleElement.innerText;
+  videoContainers.forEach((container) => {
+    const titleElement = container.querySelector("#video-title");
+    const channelElement = container.querySelector(
+      "a.yt-simple-endpoint.style-scope.yt-formatted-string"
+    );
 
-    // Ensure a valid video container exists
-    const videoContainer = titleElement.closest("ytd-rich-item-renderer, style-scope");
-    if (!videoContainer) {
-      console.log("No video container found for title:", titleText);
-      return;
-    }
+    const titleText = titleElement?.textContent?.trim().toLowerCase() || "";
+    const channelText = channelElement?.textContent?.trim().toLowerCase() || "";
 
-    // Check if the title matches the filter topic
-    if (titleText && !titleText.toLowerCase().includes(filterTopic)) {
-      console.log("Hiding video:", titleText);
-      videoContainer.style.display = "none"; // Hide the video
+    // Check if any topic matches either the title or the channel name
+    const matchesTopic = filterTopics.some(
+      (topic) => titleText.includes(topic) || channelText.includes(topic)
+    );
+
+    if (!matchesTopic) {
+      console.log("Hiding video - Title:", titleText, ", Channel:", channelText);
+      container.style.display = "none";
     } else {
-      console.log("Video matches filter topic:", titleText);
+      console.log("Keeping video - Title:", titleText, ", Channel:", channelText);
     }
   });
 }
@@ -48,7 +50,6 @@ function observeDynamicChanges() {
     hideUnrelatedVideos();
   });
 
-  // Observe changes to the #contents container where videos are loaded
   const targetNode = document.querySelector("ytd-rich-grid-renderer") || document.body;
   observer.observe(targetNode, { childList: true, subtree: true });
 
