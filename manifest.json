@@ -3,7 +3,7 @@
     "name": "YouTube Focus Filter",
     "version": "1.0",
     "description": "Hides all YouTube videos that are not related to a specific topic.",
-    "permissions": ["scripting", "activeTab", "storage"],
+    "permissions": ["activeTab", "storage"],
     "icons": {
         "16": "icons/icon16.png",
         "48": "icons/icon48.png",
